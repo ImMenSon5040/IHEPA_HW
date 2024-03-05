@@ -21,4 +21,10 @@ case $1 in
 	number)
 		index=$(echo "-$2")
 		git checkout ${commits[$index]#commit }
+		;;
+	*)
+		echo "problem3.sh [options]"
+		echo "OPTIONS"
+		echo "	date ['date']	checkout commit on a given date"
+		echo "	number [N]	checkout the N-th commit"
 esac
