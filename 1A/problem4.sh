@@ -1,8 +1,24 @@
 #!/bin/bash
 
+if [[ $# -ne 2 ]];
+then
+	option="help"
+else
+	option=$1
+fi
 
-case $1 in
-	date)
+
+case $option in
+	help | -h)
+		echo "problem4.sh [options]"
+		echo "OPTIONS"
+		echo -ne "\t-dt, date ['date']\n\t\tcheckout commit on a given date\n"
+		echo -ne "\t-nb, number [N]\n\t\tcheckout the N-th commit\n"
+		echo -ne "\t-n, new-branch [branch name]\n\t\tcreate new branch\n"
+		echo -ne "\t-d, del-branch [branch name]\n\t\tdelete specified branch\n"
+		echo -ne "\t-s, sel-branch [branch name]\n\t\tswich to specified branch\n"
+		;;
+	date | -dt)
 		IFS=$'\n'
 
 		commits=( $(git log | grep "commit") )
@@ -18,7 +34,7 @@ case $1 in
 			fi
 		done
 		;;
-	number)
+	number | -nb)
 		IFS=$'\n'
 
 		commits=( $(git log | grep "commit") )
@@ -26,18 +42,16 @@ case $1 in
 		index=$(echo "-$2")
 		git checkout ${commits[$index]#commit }
 		;;
-	new-branch)
+	new-branch | -n)
 		git branch $2
 		;;
-	del-branch)
+	del-branch | -d)
 		git branch -d $2
 		;;
-	sel-branch)
+	sel-branch | -s)
 		git checkout $2
 		;;
 	*)
-		echo "problem3.sh [options]"
-		echo "OPTIONS"
-		echo "	date ['date']	checkout commit on a given date"
-		echo "	number [N]	checkout the N-th commit"
+		echo "$option is not a recognized option"
+		echo "use 'problem4.sh help' to see how to use it"
 esac
