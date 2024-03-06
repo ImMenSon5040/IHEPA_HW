@@ -39,8 +39,7 @@ case $option in
 
 		commits=( $(git log | grep "commit") )
 
-		index=$(echo "-$2")
-		git checkout ${commits[$index]#commit }
+		git checkout ${commits[-$2]#commit }
 		;;
 	new-branch | -n)
 		git branch $2
